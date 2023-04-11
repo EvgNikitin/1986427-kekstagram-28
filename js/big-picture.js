@@ -30,7 +30,7 @@ const renderComments = () => {
     } else {
       commentsLoader.classList.remove('hidden');
     }
-    commentsCount.innerHTML = `${commentsShowed} из <span class="comments-count">${allComments}</span> комментариев`;
+    commentsCount.textContent = `${commentsShowed} из <span class="comments-count">${allComments}</span> комментариев`;
   };
 };
 
