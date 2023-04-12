@@ -30,7 +30,8 @@ const renderComments = () => {
     } else {
       commentsLoader.classList.remove('hidden');
     }
-    commentsCount.textContent = `${commentsShowed} из <span class="comments-count">${allComments}</span> комментариев`;
+    commentsCount.querySelector('.comments-opened').textContent = commentsShowed;
+    commentsCount.querySelector('.comments-count').textContent = allComments;
   };
 };
 
