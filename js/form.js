@@ -15,10 +15,6 @@ const pristine = new Pristine(form, {
   errorTextParent: 'img-upload__field-wrapper'
 });
 
-const onImageLoadCloseClick = () => {
-  closeLoaderModal();
-};
-
 const onImageLoadEscKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -47,7 +43,7 @@ const sendForm = async () => {
       body: formData
     });
 
-    form.querySelector('#upload-cancel').click();
+    closeLoaderModal();
     showMessage(MESSAGE_TYPE_SUCCESS);
   } catch {
     showMessage(MESSAGE_TYPE_ERROR);
@@ -60,7 +56,6 @@ const onImageSubmit = async (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
     await sendForm();
-    closeLoaderModal();
   }
 };
 
@@ -73,9 +68,7 @@ const validateHashtags = (value) => {
     .filter((tag) => tag.trim().length);
   return tags.length <= 5 && isArrayUnique(tags) && tags.every(validateHashtag);
 };
-/**
- * @param {string} url
- */
+
 const setPicture = (url) => {
   document.querySelector('.img-upload__preview img')
     .setAttribute('src', url);
@@ -104,7 +97,7 @@ const onImageSelect = (event) => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  document.querySelector('#upload-cancel').addEventListener('click', onImageLoadCloseClick);
+  document.querySelector('#upload-cancel').addEventListener('click', closeLoaderModal);
   document.addEventListener('keydown', onImageLoadEscKeyDown);
   if (event.target === form.filename) {
     processingPhoto(event.target.files.item(0));
